@@ -7,7 +7,7 @@ using System;
 
 namespace ToogleAPI.Controllers
 {
-    [Route("api/toggle")]
+    [Route("api/toggles")]
     public class ToggleController : Controller
     {
         private readonly IRepository<Toggle> _repository;
@@ -17,14 +17,18 @@ namespace ToogleAPI.Controllers
             _repository = repository;
         }
 
-        // GET api/toggle
+        // GET api/toggles
         [HttpGet]
-        public IEnumerable<Toggle> Get()
+        public IActionResult Get()
         {
-            return _repository.GetAll().ToList();
+            var toggles = _repository.GetAll().ToList();
+
+            var togglesDto = AutoMapper.Mapper.Map<IEnumerable<ToggleDtoOutput>>(toggles);
+
+            return Ok(togglesDto);
         }
 
-        // GET api/toggle/5
+        // GET api/toggles/5
         [HttpGet("{id}", Name ="GetById")]
         public IActionResult Get(Guid id)
         {
@@ -34,29 +38,30 @@ namespace ToogleAPI.Controllers
             {
                 return NotFound();
             }
+            var dto = AutoMapper.Mapper.Map<ToggleDtoOutput>(item);
 
-            return new ObjectResult(item);
+            return Ok(dto);
         }
 
-
-
-        // POST api/toggle
+        // POST api/toggles
         [HttpPost]
-        public IActionResult Post([FromBody]Toggle toggle)
+        public IActionResult Post([FromBody]ToggleDtoInput toggleDtoInput)
         {
-            if(toggle == null)
+            if(toggleDtoInput == null)
             {
                 return BadRequest() ;
             }
 
+            var toggle = AutoMapper.Mapper.Map<Toggle>(toggleDtoInput);
             _repository.Add(toggle);
-            _repository.Save();
+            _repository.Save();//Todo:review if we should return any error?
+            var toggleDtoOutput = AutoMapper.Mapper.Map<ToggleDtoOutput>(toggle);
 
-            return CreatedAtRoute("GetById", new { id = toggle.Id }, toggle);
+            return CreatedAtRoute("GetById", new { id = toggleDtoOutput.Id }, toggleDtoOutput);
 
         }
 
-        // PUT api/toggle/5
+        // PUT api/toggles/5
         [HttpPut("{id}")]
         public IActionResult Put(Guid id, [FromBody]Toggle toggle)
         {
@@ -71,7 +76,7 @@ namespace ToogleAPI.Controllers
             return new NoContentResult();
         }
 
-        // DELETE api/toggle/5
+        // DELETE api/toggles/5
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {

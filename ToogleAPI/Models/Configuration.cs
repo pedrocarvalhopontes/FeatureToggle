@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ToogleAPI.Models
 {
-    public class ToogleConfiguration
+    public class Configuration
     {
         public Guid Id { get; set; }
         public string SystemName { get; set; }
         public bool Value { get; set; }
+
+        //Navigation Property
+        public Toggle toggle { get; set; }
     }
 }

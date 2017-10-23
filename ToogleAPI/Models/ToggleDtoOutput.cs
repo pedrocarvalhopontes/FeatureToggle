@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-
 namespace ToogleAPI.Models
 {
-    public class Toggle
+    public class ToggleDtoOutput
     {
         public Guid Id { get; set; }
         public long Version { get; set; }
         public String Name { get; set; }
-
-        public IList<Configuration> Configurations { get; set; }
     }
 }

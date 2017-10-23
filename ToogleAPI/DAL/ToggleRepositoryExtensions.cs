@@ -20,8 +20,8 @@ namespace ToogleAPI.DAL
 
         private static void Seed(ToggleContext context)
         {
-            IList<ToogleConfiguration> defaultConfigs = new List<ToogleConfiguration>();
-            defaultConfigs.Add(new ToogleConfiguration { SystemName = "*", Value = true });
+            IList<Configuration> defaultConfigs = new List<Configuration>();
+            defaultConfigs.Add(new Configuration { SystemName = "*", Value = true });
 
             context.ToggleItems.Add(new Toggle
             {
