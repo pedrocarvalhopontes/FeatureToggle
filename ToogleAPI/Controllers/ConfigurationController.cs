@@ -29,9 +29,54 @@ namespace ToogleAPI.Controllers
                 return NotFound();
             }
 
-            var toggleConfigurations = AutoMapper.Mapper.Map<IEnumerable<ConfigurationDTO>>(toggle.Configurations);
+            var toggleConfigurations = AutoMapper.Mapper.Map<IEnumerable<ConfigurationDtoOutput>>(toggle.Configurations);
 
             return Ok(toggleConfigurations);
+        }
+
+        [HttpGet("{id}", Name ="GetConfigurationForToggle")]
+        public IActionResult GetConfigurationForToggle(Guid toggleId, Guid id)
+        {
+            var toggle = _repository.Get(toggleId);
+            if (toggle == null)
+            {
+                return NotFound();
+            }
+
+            var configuration = toggle.Configurations.FirstOrDefault(c => c.Id == id);
+            if (configuration == null)
+            {
+                return NotFound();
+            }
+
+            var toggleConfiguration = AutoMapper.Mapper.Map<ConfigurationDtoOutput>(configuration);
+            return Ok(toggleConfiguration);
+        }
+
+        [HttpPost]
+        public IActionResult CreateConfigurationForToggle(Guid toggleId, [FromBody]ConfigurationDtoInput configuration)
+        {
+            if (configuration == null)
+            {
+                return BadRequest();
+            }
+
+            var toggle = _repository.Get(toggleId);
+
+            if (toggle == null)
+            {
+                return NotFound();
+            }
+
+            var configurationEntity = AutoMapper.Mapper.Map<Configuration>(configuration);
+            toggle.Configurations.Add(configurationEntity);
+            _repository.Save();
+
+            var configurationOutput = AutoMapper.Mapper.Map<ConfigurationDtoOutput>(configurationEntity);
+
+            return CreatedAtRoute("GetConfigurationForToggle",
+                new { toggleId = toggleId, id = configurationOutput.Id },
+                configurationOutput);
         }
 
     }

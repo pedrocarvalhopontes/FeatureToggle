@@ -71,7 +71,10 @@ namespace ToogleAPI
                 cfg.CreateMap<Toggle, ToggleDtoInput>();
                 cfg.CreateMap<ToggleDtoInput, Toggle> ();
 
-                cfg.CreateMap<Configuration, ConfigurationDTO>();
+                cfg.CreateMap<Configuration, ConfigurationDtoOutput>();
+                cfg.CreateMap<ConfigurationDtoOutput, Configuration>();
+                cfg.CreateMap<Configuration, ConfigurationDtoInput>();
+                cfg.CreateMap<ConfigurationDtoInput, Configuration>();
             });
 
             //Seeding context data for Demo purposes
