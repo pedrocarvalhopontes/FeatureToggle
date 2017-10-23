@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using ToogleAPI.Models;
 using ToogleAPI.Interface;
+using System;
 
 namespace ToogleAPI.Controllers
 {
@@ -25,7 +26,7 @@ namespace ToogleAPI.Controllers
 
         // GET api/toggle/5
         [HttpGet("{id}", Name ="GetById")]
-        public IActionResult Get(long id)
+        public IActionResult Get(Guid id)
         {
             var item = _repository.Get(id);
 
@@ -57,7 +58,7 @@ namespace ToogleAPI.Controllers
 
         // PUT api/toggle/5
         [HttpPut("{id}")]
-        public IActionResult Put(long id, [FromBody]Toggle toggle)
+        public IActionResult Put(Guid id, [FromBody]Toggle toggle)
         {
             if(toggle == null || toggle.Id != id)
             {
@@ -72,7 +73,7 @@ namespace ToogleAPI.Controllers
 
         // DELETE api/toggle/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(long id)
+        public IActionResult Delete(Guid id)
         {
             _repository.Remove(id);
             _repository.Save();

@@ -8,11 +8,11 @@ namespace ToogleAPI.Interface
 {
     public interface IRepository<TEntity> where TEntity:class
     {
-        TEntity Get(long key);
+        TEntity Get(Guid key);
         IQueryable<TEntity> GetAll();
         TEntity Add(TEntity item);
         TEntity Update(TEntity item);
-        void Remove(long key);
+        void Remove(Guid key);
         void Save();
     }
 }

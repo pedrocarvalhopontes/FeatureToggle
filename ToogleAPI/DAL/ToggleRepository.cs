@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 using ToogleAPI.Interface;
 using ToogleAPI.Models;
 
@@ -11,12 +13,6 @@ namespace ToogleAPI.DAL
         public ToggleRepository(ToggleContext context)
         {
             _context = context;
-
-            ///TODO:review
-            if (!context.ToggleItems.Any())
-            {
-                ContextInitializer.Initialize(context);
-            }
         }
 
         public Toggle Add(Toggle item)
@@ -25,17 +21,17 @@ namespace ToogleAPI.DAL
             return entityEntry.Entity;
         }
 
-        public Toggle Get(long key)
+        public Toggle Get(Guid key)
         {
-            return _context.ToggleItems.FirstOrDefault(t => t.Id == key);
+            return _context.ToggleItems.Include(t => t.Configurations).FirstOrDefault(t => t.Id == key);
         }
 
         public IQueryable<Toggle> GetAll()
         {
-            return _context.ToggleItems;
+            return _context.ToggleItems.Include(t => t.Configurations);
         }
 
-        public void Remove(long key)
+        public void Remove(Guid key)
         {
             var item = Get(key);
             _context.Remove(item);
@@ -46,12 +42,12 @@ namespace ToogleAPI.DAL
             _context.SaveChanges();
         }
 
+        //TODO:update configurations
         public Toggle Update(Toggle item)
         {
             var toggle = Get(item.Id);
 
             toggle.Name = item.Name;
-            toggle.Value = item.Value;
             toggle.Version = toggle.Version++;
 
             _context.ToggleItems.Update(item);

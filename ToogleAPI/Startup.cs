@@ -23,9 +23,7 @@ namespace ToogleAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ToggleContext>(opt => opt.UseInMemoryDatabase("Toggle API"));
-            //services.AddSingleton<DbContext, ToggleContext>(); //We need it to be singleton since we are using an in-memory database
             services.AddScoped<IRepository<Toggle>, ToggleRepository>();
-            //services.AddScoped<IUnitOfWork<Toggle>, UnitOfWork<Toggle>>();
             services.AddMvc();
 
             services.AddSwaggerGen(c =>
@@ -35,7 +33,7 @@ namespace ToogleAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ToggleContext context)
         {
             if (env.IsDevelopment())
             {
@@ -48,6 +46,9 @@ namespace ToogleAPI
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Toggle API V1");
             });
+
+            //Seeding context data for Demo purposes
+            context.EnsureSeedDataForContext();
         }
     }
 }
