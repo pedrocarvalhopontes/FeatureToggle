@@ -13,6 +13,7 @@ namespace ToogleAPI.Interface
         TEntity Add(TEntity item);
         TEntity Update(TEntity item);
         void Remove(Guid key);
+        bool Contains(Guid key);
         void Save();
     }
 }

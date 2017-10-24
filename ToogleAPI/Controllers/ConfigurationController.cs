@@ -79,5 +79,26 @@ namespace ToogleAPI.Controllers
                 configurationOutput);
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult DeleteConfigurationForToggle(Guid toggleId, Guid id)
+        {
+            var toggle = _repository.Get(toggleId);
+            if (toggle == null)
+            {
+                return NotFound();
+            }
+
+            var configuration = toggle.Configurations.FirstOrDefault(c => c.Id == id);
+            if (configuration == null)
+            {
+                return NotFound();
+            }
+
+            toggle.Configurations.Remove(configuration);
+            _repository.Save();
+
+            return new NoContentResult();
+        }
+
     }
 }

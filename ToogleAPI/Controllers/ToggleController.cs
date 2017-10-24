@@ -80,6 +80,11 @@ namespace ToogleAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
+            if (!_repository.Contains(id))
+            {
+                return NotFound();
+            }
+
             _repository.Remove(id);
             _repository.Save();
 

@@ -37,6 +37,11 @@ namespace ToogleAPI.DAL
             _context.Remove(item);
         }
 
+        public bool Contains(Guid key)
+        {
+            return _context.ToggleItems.Any(t => t.Id == key);
+        }
+
         public void Save()
         {
             _context.SaveChanges();
