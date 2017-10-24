@@ -9,6 +9,6 @@ namespace ToogleAPI.Models
         public long Version { get; set; }
         public String Name { get; set; }
 
-        public IList<Configuration> Configurations { get; set; }
+        public ICollection<Configuration> Configurations { get; set; }
     }
 }

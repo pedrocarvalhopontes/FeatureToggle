@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ToogleAPI.Models
 {
@@ -6,5 +7,7 @@ namespace ToogleAPI.Models
     {
         public long Version { get; set; }
         public String Name { get; set; }
+
+        public ICollection<ConfigurationDtoInput> Configurations { get; set; }
     }
 }
