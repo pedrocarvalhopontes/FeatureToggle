@@ -97,7 +97,28 @@ namespace ToogleAPI.Controllers
             toggle.Configurations.Remove(configuration);
             _repository.Save();
 
-            return new NoContentResult();
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateConfigurationForToggle(Guid toggleId, Guid id, [FromBody]ConfigurationDtoInput newConfiguration)
+        {
+            var toggle = _repository.Get(toggleId);
+            if (toggle == null)
+            {
+                return NotFound();
+            }
+
+            var existingConfiguration = toggle.Configurations.FirstOrDefault(c => c.Id == id);
+            if (existingConfiguration == null)
+            {
+                return NotFound();
+            }
+
+            AutoMapper.Mapper.Map(newConfiguration, existingConfiguration);
+            _repository.Save();
+
+            return NoContent();
         }
 
     }

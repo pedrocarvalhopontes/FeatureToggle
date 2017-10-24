@@ -47,17 +47,11 @@ namespace ToogleAPI.DAL
             _context.SaveChanges();
         }
 
-        //TODO:update configurations
+        //TODO:review
         public Toggle Update(Toggle item)
         {
-            var toggle = Get(item.Id);
-
-            toggle.Name = item.Name;
-            toggle.Version = toggle.Version++;
-
-            _context.ToggleItems.Update(item);
-
-            return toggle;
+            item.Version = item.Version++;
+            return item;
         }
     }
 }

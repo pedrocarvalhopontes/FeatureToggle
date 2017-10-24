@@ -63,17 +63,25 @@ namespace ToogleAPI.Controllers
 
         // PUT api/toggles/5
         [HttpPut("{id}")]
-        public IActionResult Put(Guid id, [FromBody]Toggle toggle)
+        public IActionResult Put(Guid id, [FromBody]ToggleDtoInput newtoggle)
         {
-            if(toggle == null || toggle.Id != id)
+            if(newtoggle == null)
             {
                 return BadRequest();
             }
 
+            var toggle = _repository.Get(id);
+            if (toggle == null)
+            {
+                return BadRequest();
+            }
+
+            AutoMapper.Mapper.Map(newtoggle, toggle);
+
             _repository.Update(toggle);
             _repository.Save();
 
-            return new NoContentResult();
+            return NoContent();
         }
 
         // DELETE api/toggles/5
@@ -88,7 +96,7 @@ namespace ToogleAPI.Controllers
             _repository.Remove(id);
             _repository.Save();
 
-            return new NoContentResult();
+            return NoContent();
         }
         
     }
