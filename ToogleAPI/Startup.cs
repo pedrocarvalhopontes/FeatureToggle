@@ -8,6 +8,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using ToogleAPI.Interface;
 using ToogleAPI.DAL;
 using Microsoft.AspNetCore.Http;
+using ToggleAPI.Mapping;
 
 namespace ToogleAPI
 {
@@ -56,29 +57,23 @@ namespace ToogleAPI
             }
 
             app.UseMvc();
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Toggle API V1");
-            });
-
-            //TODO:review
-            //Automapper configuration
-            AutoMapper.Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<Toggle, ToggleDtoOutput>();
-                cfg.CreateMap<ToggleDtoOutput, Toggle>();
-                cfg.CreateMap<Toggle, ToggleDtoInput>();
-                cfg.CreateMap<ToggleDtoInput, Toggle> ();
-
-                cfg.CreateMap<Configuration, ConfigurationDtoOutput>();
-                cfg.CreateMap<ConfigurationDtoOutput, Configuration>();
-                cfg.CreateMap<Configuration, ConfigurationDtoInput>();
-                cfg.CreateMap<ConfigurationDtoInput, Configuration>();
-            });
+            SetupSwaggerDocumentation(app);
+            SetupAutomapper();
 
             //Seeding context data for Demo purposes
             context.EnsureSeedDataForContext();
+        }
+
+        private static void SetupSwaggerDocumentation(IApplicationBuilder app)
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Toggle API V1"); });
+        }
+
+        private static void SetupAutomapper()
+        {
+            var cfg = new ToggleMappingConfiguration();
+            AutoMapper.Mapper.Initialize(cfg.ConfigurationAction);
         }
     }
 }
