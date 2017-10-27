@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace ToogleAPI.Models
 {
+    /// <summary>
+    /// Represents a Toggle entity.
+    /// A toogle can have multiple configurations.
+    /// </summary>
     public class Toggle
     {
         public Guid Id { get; set; }

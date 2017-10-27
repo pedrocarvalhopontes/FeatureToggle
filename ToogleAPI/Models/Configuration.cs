@@ -2,6 +2,10 @@
 
 namespace ToogleAPI.Models
 {
+    /// <summary>
+    /// Represents a configuration entity.
+    /// A configuration belongs to a unique toggle
+    /// </summary>
     public class Configuration
     {
         public Guid Id { get; set; }

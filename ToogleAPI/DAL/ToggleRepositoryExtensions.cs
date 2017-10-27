@@ -5,8 +5,15 @@ using ToogleAPI.Models;
 
 namespace ToogleAPI.DAL
 {
+    /// <summary>
+    /// Extends the ToogleRepository class with a seeding mechanism.
+    /// </summary>
     public static class ToggleRepositoryExtensions
     {
+        /// <summary>
+        /// Ensures that a database is created and if it is empty and, if so, it feeds some data into it.
+        /// </summary>
+        /// <param name="context"></param>
         public static void EnsureSeedDataForContext(this ToggleContext context)
         {
             context.Database.EnsureCreated();

@@ -17,6 +17,11 @@ namespace ToogleAPI.Controllers
             _repository = repository;
         }
 
+        /// <summary>
+        /// Retrieves a collection of all configurations available for a given toggle that maches the <paramref name="toggleId"/>.
+        /// </summary>
+        /// <param name="toggleId">Unique identifier of a toggle.</param>
+        /// <returns>Ok if successful, NotFound if the toggle for the given identifier doesn't exists.</returns>
         [HttpGet]
         public IActionResult GetConfigurationsForToggle(Guid toggleId)
         {
@@ -32,6 +37,12 @@ namespace ToogleAPI.Controllers
             return Ok(toggleConfigurations);
         }
 
+        /// <summary>
+        /// Retrieves the collection that matches the <paramref name="id"/> from configurations available for a given toggle that maches the <paramref name="toggleId"/>.
+        /// </summary>
+        /// <param name="toggleId">Unique identifier of a toggle.</param>
+        /// <param name="id">Unique identifier of a configuration.</param>
+        /// <returns>Ok if successful, NotFound if the toggle or configuration don't exist.</returns>
         [HttpGet("{id}", Name ="GetConfigurationForToggle")]
         public IActionResult GetConfigurationForToggle(Guid toggleId, Guid id)
         {
@@ -51,6 +62,12 @@ namespace ToogleAPI.Controllers
             return Ok(toggleConfiguration);
         }
 
+        /// <summary>
+        /// Creates a new configuration for the toggle that maches the <paramref name="toggleId"/>.
+        /// </summary>
+        /// <param name="toggleId">Unique identifier of a toggle.</param>
+        /// <param name="configuration">Input configuration</param>
+        /// <returns>CreatedAtRoute if successful, NotFound if the toggle doesn't exist.</returns>
         [HttpPost]
         public IActionResult CreateConfigurationForToggle(Guid toggleId, [FromBody]ConfigurationDtoInput configuration)
         {
@@ -77,6 +94,12 @@ namespace ToogleAPI.Controllers
                 configurationOutput);
         }
 
+        /// <summary>
+        /// Deletes a configuration that matches the <paramref name="id"/> from configurations available for a toggle that maches the <paramref name="toggleId"/>.
+        /// </summary>
+        /// <param name="toggleId">Unique identifier of a toggle.</param>
+        /// <param name="id">Unique identifier of the configuration.</param>
+        /// <returns>NoContent if successful, NotFound if the toggle doesn't exist.</returns>
         [HttpDelete("{id}")]
         public IActionResult DeleteConfigurationForToggle(Guid toggleId, Guid id)
         {
@@ -98,6 +121,13 @@ namespace ToogleAPI.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Performs a full update for an existing configuration that matches the <paramref name="id"/> from configurations available for a toggle that maches the <paramref name="toggleId"/>.
+        /// </summary>
+        /// <param name="toggleId">Unique identifier of a toggle.</param>
+        /// <param name="id">Unique identifier of a configuration.</param>
+        /// <param name="newConfiguration"></param>
+        /// <returns>NoContent if successful, NotFound if the toggle doesn't exist.</returns>
         [HttpPut("{id}")]
         public IActionResult UpdateConfigurationForToggle(Guid toggleId, Guid id, [FromBody]ConfigurationDtoInput newConfiguration)
         {

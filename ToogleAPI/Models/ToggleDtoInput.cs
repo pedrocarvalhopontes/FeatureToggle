@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace ToogleAPI.Models
 {
+    /// <summary>
+    /// Dto used for input operations.
+    /// Mapped between DTOs and entities is performed using Automapper.
+    /// </summary>
     public class ToggleDtoInput
     {
         public long Version { get; set; }
