@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ToogleAPI.Models
+﻿namespace ToogleAPI.Models
 {
     public class ConfigurationDtoInput
     {

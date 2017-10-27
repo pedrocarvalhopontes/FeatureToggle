@@ -9,6 +9,6 @@ namespace ToogleAPI.Models
         public bool Value { get; set; }
 
         //Navigation Property
-        public Toggle toggle { get; set; }
+        public Toggle Toggle { get; set; }
     }
 }

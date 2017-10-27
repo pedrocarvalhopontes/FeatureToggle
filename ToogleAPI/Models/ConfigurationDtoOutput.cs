@@ -7,6 +7,6 @@ namespace ToogleAPI.Models
         public Guid Id { get; set; }
         public string SystemName { get; set; }
         public bool Value { get; set; }
-        public Guid toggleId { get; set; }
+        public Guid ToggleId { get; set; }
     }
 }

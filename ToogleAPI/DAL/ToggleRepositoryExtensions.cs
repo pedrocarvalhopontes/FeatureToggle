@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using ToogleAPI.Models;
 
 namespace ToogleAPI.DAL
@@ -20,8 +19,10 @@ namespace ToogleAPI.DAL
 
         private static void Seed(ToggleContext context)
         {
-            IList<Configuration> defaultConfigs = new List<Configuration>();
-            defaultConfigs.Add(new Configuration { SystemName = "*", Value = true });
+            IList<Configuration> defaultConfigs = new List<Configuration>
+            {
+                new Configuration { SystemName = "*", Value = true }
+            };
 
             context.ToggleItems.Add(new Toggle
             {
