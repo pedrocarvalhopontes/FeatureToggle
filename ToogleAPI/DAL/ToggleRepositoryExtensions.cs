@@ -26,18 +26,42 @@ namespace ToogleAPI.DAL
 
         private static void Seed(ToggleContext context)
         {
-            IList<Configuration> defaultConfigs = new List<Configuration>
-            {
-                new Configuration { SystemName = "*", Value = true }
-            };
-
-            context.ToggleItems.Add(new Toggle
+            var isButtonBlue = new Toggle
             {
                 Id = new Guid(),
-                Name = "Default",
+                Name = "isButtonBlue",
                 Version = 1,
-                Configurations = defaultConfigs
-            });
+                Configurations =
+                {
+                    new Configuration {SystemName = "*", Value = true}
+                }
+            };
+
+            var isButtonGreen = new Toggle
+            {
+                Id = new Guid(),
+                Name = "isButtonGreen",
+                Version = 1,
+                Configurations =
+                {
+                    new Configuration {SystemName = "Abc", Value = true}
+                }
+            };
+
+            var isButtonRed = new Toggle
+            {
+                Id = new Guid(),
+                Name = "isButtonRed",
+                Version = 1,
+                Configurations =
+                {
+                    new Configuration {SystemName = "*", Value = true},
+                    new Configuration {SystemName = "Abc", Value=false}
+                }
+            };
+            context.ToggleItems.Add(isButtonBlue);
+            context.ToggleItems.Add(isButtonGreen);
+            context.ToggleItems.Add(isButtonRed);
 
             context.SaveChanges();
         }

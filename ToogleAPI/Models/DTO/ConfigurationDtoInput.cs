@@ -1,16 +1,12 @@
-﻿using System;
-
-namespace ToogleAPI.Models
+﻿namespace ToggleAPI.Models.DTO
 {
     /// <summary>
-    /// Dto used for output operations.
+    /// Dto used for input operations.
     /// Mapped between DTOs and entities is performed using Automapper.
     /// </summary>
-    public class ConfigurationDtoOutput
+    public class ConfigurationDtoInput
     {
-        public Guid Id { get; set; }
         public string SystemName { get; set; }
         public bool Value { get; set; }
-        public Guid ToggleId { get; set; }
     }
 }

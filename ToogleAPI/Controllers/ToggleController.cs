@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ToogleAPI.Models;
 using ToogleAPI.Interface;
 using System;
+using ToggleAPI.Models.DTO;
 
 namespace ToogleAPI.Controllers
 {

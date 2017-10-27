@@ -14,5 +14,10 @@ namespace ToogleAPI.Models
         public String Name { get; set; }
 
         public ICollection<Configuration> Configurations { get; set; }
+
+        public Toggle()
+        {
+            Configurations = new List<Configuration>();
+        }
     }
 }
