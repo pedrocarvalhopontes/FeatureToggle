@@ -71,10 +71,9 @@ namespace ToggleAPI.DAL
             return toggles;
         }
 
-        //TODO:review
         public Toggle Update(Toggle item)
         {
-            item.Version = item.Version++;
+            item.Version++;
             return item;
         }
     }

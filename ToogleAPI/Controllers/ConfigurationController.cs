@@ -132,6 +132,11 @@ namespace ToggleAPI.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateConfigurationForToggle(Guid toggleId, Guid id, [FromBody]ConfigurationDtoInput newConfiguration)
         {
+            if (newConfiguration == null)
+            {
+                return BadRequest();
+            }
+
             var toggle = _repository.Get(toggleId);
             if (toggle == null)
             {

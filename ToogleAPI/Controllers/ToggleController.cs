@@ -22,28 +22,11 @@ namespace ToggleAPI.Controllers
         [HttpGet]
         public IActionResult Get(string systemName)
         {
-            if (systemName != null)
-            {
-                return GetBySystemName(systemName);
-            }
+            var toggles = systemName == null ? _repository.GetAll().ToList() : _repository.GetTooglesForSystem(systemName);
 
-            var toggles = _repository.GetAll().ToList();
             var togglesDto = AutoMapper.Mapper.Map<IEnumerable<ToggleDtoOutput>>(toggles);
 
             return Ok(togglesDto);
-        }
-
-        private IActionResult GetBySystemName(string systemName)
-        {
-            var tooglesForSystem = _repository.GetTooglesForSystem(systemName);
-
-            if (tooglesForSystem == null)
-            {
-                return NotFound();
-            }
-            var toggleToReturn = AutoMapper.Mapper.Map<IEnumerable<ToggleDtoOutput>>(tooglesForSystem).ToList();
-
-            return Ok(toggleToReturn);
         }
 
         // GET api/toggles/5
