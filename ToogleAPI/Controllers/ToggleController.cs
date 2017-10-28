@@ -2,8 +2,8 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using ToogleAPI.Models;
-using ToogleAPI.Interface;
 using System;
+using ToggleAPI.Interface;
 using ToggleAPI.Models.DTO;
 
 namespace ToogleAPI.Controllers
@@ -11,22 +11,39 @@ namespace ToogleAPI.Controllers
     [Route("api/toggles")]
     public class ToggleController : Controller
     {
-        private readonly IRepository<Toggle> _repository;
+        private readonly IToggleRepository _repository;
 
-        public ToggleController(IRepository<Toggle> repository)
+        public ToggleController(IToggleRepository repository)
         {
             _repository = repository;
         }
 
         // GET api/toggles
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(string systemName)
         {
-            var toggles = _repository.GetAll().ToList();
+            if (systemName != null)
+            {
+                return GetBySystemName(systemName);
+            }
 
+            var toggles = _repository.GetAll().ToList();
             var togglesDto = AutoMapper.Mapper.Map<IEnumerable<ToggleDtoOutput>>(toggles);
 
             return Ok(togglesDto);
+        }
+
+        private IActionResult GetBySystemName(string systemName)
+        {
+            var tooglesForSystem = _repository.GetTooglesForSystem(systemName);
+
+            if (tooglesForSystem == null)
+            {
+                return NotFound();
+            }
+            var toggleToReturn = AutoMapper.Mapper.Map<IEnumerable<ToggleDtoOutput>>(tooglesForSystem).ToList();
+
+            return Ok(toggleToReturn);
         }
 
         // GET api/toggles/5

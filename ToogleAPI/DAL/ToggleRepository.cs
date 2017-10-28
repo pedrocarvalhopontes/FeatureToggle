@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using ToogleAPI.Interface;
+using ToggleAPI.Interface;
 using ToogleAPI.Models;
 
 namespace ToogleAPI.DAL
 {
-    public class ToggleRepository : IRepository<Toggle>
+    public class ToggleRepository : IToggleRepository
     {
         private readonly ToggleContext _context;
 
@@ -45,6 +46,29 @@ namespace ToogleAPI.DAL
         public void Save()
         {
             _context.SaveChanges();
+        }
+
+        public IEnumerable<Toggle> GetTooglesForSystem(string systemName)
+        {
+            var tooglesWithSystemName =  _context.ToggleItems.Include(t => t.Configurations)
+                .Where(t => t.Configurations.Any(c => c.SystemName.Equals(systemName) || c.SystemName.Equals("*"))).ToList();
+
+            return FilterConfigurationsBySystemNameOrDefault(systemName, tooglesWithSystemName);
+        }
+
+        private List<Toggle> FilterConfigurationsBySystemNameOrDefault(string systemName, List<Toggle> toggles)
+        {
+            toggles.ForEach(t =>
+            {
+                if (t.Configurations.Count > 1)
+                {
+                    var specificConfiguration = t.Configurations.FirstOrDefault(c => c.SystemName == systemName) ??
+                                                t.Configurations.FirstOrDefault(c => c.SystemName == "*");
+                    t.Configurations = new List<Configuration> {specificConfiguration};
+                }
+            });
+
+            return toggles;
         }
 
         //TODO:review

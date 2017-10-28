@@ -5,9 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 using ToogleAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
-using ToogleAPI.Interface;
 using ToogleAPI.DAL;
 using Microsoft.AspNetCore.Http;
+using ToggleAPI.Interface;
 using ToggleAPI.Mapping;
 
 namespace ToogleAPI
@@ -26,6 +26,7 @@ namespace ToogleAPI
         {
             services.AddDbContext<ToggleContext>(opt => opt.UseInMemoryDatabase("Toggle API"));
             services.AddScoped<IRepository<Toggle>, ToggleRepository>();
+            services.AddScoped<IToggleRepository, ToggleRepository>();
             services.AddMvc(setupAction =>
             {
                 setupAction.ReturnHttpNotAcceptable = true;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace ToogleAPI.Interface
+namespace ToggleAPI.Interface
 {
     /// <summary>
     /// Definition of the contract to the implementation of the repository pattern.

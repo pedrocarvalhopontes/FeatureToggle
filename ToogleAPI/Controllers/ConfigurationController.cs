@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using ToggleAPI.Interface;
 using ToggleAPI.Models.DTO;
-using ToogleAPI.Interface;
 using ToogleAPI.Models;
 
-namespace ToogleAPI.Controllers
+namespace ToggleAPI.Controllers
 {
     [Route("api/toggles/{ToggleId}/configurations")]
     public class ConfigurationController : Controller
     {
-        private readonly IRepository<Toggle> _repository;
+        private readonly IToggleRepository _repository;
 
-        public ConfigurationController(IRepository<Toggle> repository)
+        public ConfigurationController(IToggleRepository repository)
         {
             _repository = repository;
         }
