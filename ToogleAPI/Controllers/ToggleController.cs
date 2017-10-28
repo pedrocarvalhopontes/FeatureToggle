@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using ToogleAPI.Models;
-using System;
 using ToggleAPI.Interface;
+using ToggleAPI.Models;
 using ToggleAPI.Models.DTO;
 
-namespace ToogleAPI.Controllers
+namespace ToggleAPI.Controllers
 {
     [Route("api/toggles")]
     public class ToggleController : Controller

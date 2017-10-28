@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ToogleAPI.Models;
 
 namespace ToggleAPI.Models.DTO
 {

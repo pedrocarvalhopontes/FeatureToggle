@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ToogleAPI.Models;
-using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
-using ToogleAPI.DAL;
-using Microsoft.AspNetCore.Http;
+using ToggleAPI.DAL;
 using ToggleAPI.Interface;
 using ToggleAPI.Mapping;
+using ToggleAPI.Models;
 
-namespace ToogleAPI
+namespace ToggleAPI
 {
     public class Startup
     {

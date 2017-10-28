@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ToogleAPI.Models
+namespace ToggleAPI.Models
 {
     /// <summary>
     /// Represents a configuration entity.

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace ToogleAPI
+namespace ToggleAPI
 {
     public class Program
     {

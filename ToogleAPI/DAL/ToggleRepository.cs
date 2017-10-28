@@ -1,11 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using ToggleAPI.Interface;
-using ToogleAPI.Models;
+using ToggleAPI.Models;
 
-namespace ToogleAPI.DAL
+namespace ToggleAPI.DAL
 {
     public class ToggleRepository : IToggleRepository
     {

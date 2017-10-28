@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ToogleAPI.Models
+namespace ToggleAPI.Models
 {
     /// <summary>
     /// Represents a Toggle entity.

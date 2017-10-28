@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace ToogleAPI.Models
+namespace ToggleAPI.Models
 {
     public class ToggleContext : DbContext
     {

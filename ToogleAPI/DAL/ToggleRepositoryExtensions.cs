@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using ToogleAPI.Models;
+using ToggleAPI.Models;
 
-namespace ToogleAPI.DAL
+namespace ToggleAPI.DAL
 {
     /// <summary>
     /// Extends the ToogleRepository class with a seeding mechanism.

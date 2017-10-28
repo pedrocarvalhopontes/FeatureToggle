@@ -1,7 +1,7 @@
 ﻿using System;
 using AutoMapper;
+using ToggleAPI.Models;
 using ToggleAPI.Models.DTO;
-using ToogleAPI.Models;
 
 namespace ToggleAPI.Mapping
 {
