@@ -8,6 +8,6 @@ namespace ToggleAPI.Interface
 {
     public interface IToggleRepository:IRepository<Toggle>
     {
-        IEnumerable<Toggle> GetTooglesForSystem(string systemName);
+        IEnumerable<Toggle> GetTogglesForSystem(string systemName);
     }
 }

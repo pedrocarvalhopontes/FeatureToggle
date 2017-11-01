@@ -48,10 +48,10 @@ namespace ToggleAPI.DAL
             _context.SaveChanges();
         }
 
-        public IEnumerable<Toggle> GetTooglesForSystem(string systemName)
+        public IEnumerable<Toggle> GetTogglesForSystem(string systemName)
         {
             var tooglesWithSystemName =  _context.ToggleItems.Include(t => t.Configurations)
-                .Where(t => t.Configurations.Any(c => c.SystemName.Equals(systemName) || c.SystemName.Equals("*"))).ToList();
+                .Where(t => t.Configurations.Any(c => systemName.Equals(c.SystemName) || "*".Equals(c.SystemName))).ToList();
 
             return FilterConfigurationsBySystemNameOrDefault(systemName, tooglesWithSystemName);
         }

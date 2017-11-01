@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -121,6 +122,39 @@ namespace ToggleAPI.UnitTests
             Assert.IsFalse(result);
         }
 
+        [TestMethod]
+        public void GetTogglesForSystem_Abc_Sucessful()
+        {
+            var repository = new ToggleRepository(_context);
+            var systemName = "Abc";
 
+            var result = repository.GetTogglesForSystem(systemName);
+
+            AssertConfigurationAreOfSystem(result, systemName);
+        }
+
+        [TestMethod]
+        public void GetTogglesForSystem_Default_Sucessful()
+        {
+            var repository = new ToggleRepository(_context);
+            var systemName = "*";
+
+            var result = repository.GetTogglesForSystem(systemName);
+
+            AssertConfigurationAreOfSystem(result, systemName);
+        }
+
+        private void AssertConfigurationAreOfSystem(IEnumerable<Toggle> toggles, string systemName)
+        {
+            Assert.IsNotNull(toggles);
+            foreach (var toggle in toggles)
+            {
+                Assert.AreEqual(1, toggle.Configurations.Count);
+                var actualName = toggle.Configurations.First().SystemName;
+                Assert.IsTrue(systemName.Equals(actualName) || "*".Equals(actualName));
+            }
+        }
+
+        
     }
 }

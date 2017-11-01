@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ToggleAPI.Interface;
 using ToggleAPI.Models;
@@ -22,7 +23,7 @@ namespace ToggleAPI.Controllers
         [HttpGet]
         public IActionResult Get(string systemName)
         {
-            var toggles = systemName == null ? _repository.GetAll().ToList() : _repository.GetTooglesForSystem(systemName);
+            var toggles = systemName == null ? _repository.GetAll().ToList() : _repository.GetTogglesForSystem(systemName);
 
             var togglesDto = AutoMapper.Mapper.Map<IEnumerable<ToggleDtoOutput>>(toggles);
 
