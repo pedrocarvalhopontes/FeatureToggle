@@ -12,8 +12,8 @@ namespace ToggleAPI.Models
         public Guid Id { get; set; }
         public long Version { get; set; }
         public String Name { get; set; }
-
         public ICollection<Configuration> Configurations { get; set; }
+        public SystemUser User { get; set; }
 
         public Toggle()
         {

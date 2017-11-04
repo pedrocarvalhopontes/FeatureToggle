@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using ToggleAPI.Models;
 
 namespace ToggleAPI.DAL
@@ -12,18 +15,18 @@ namespace ToggleAPI.DAL
         /// <summary>
         /// Ensures that a database is created and if it is empty and, if so, it feeds some data into it.
         /// </summary>
-        /// <param name="context"></param>
-        public static void EnsureSeedDataForContext(this ToggleContext context)
+        public static void EnsureSeedDataForContext(this ToggleContext context, UserManager<SystemUser> userMgr, RoleManager<IdentityRole> roleMgr)
         {
             context.Database.EnsureCreated();
             if (context.ToggleItems.Any())
             {
                 return;
             }
-            Seed(context);
+            SeedToggles(context);
+            SeedUsers(context, userMgr, roleMgr).Wait();
         }
 
-        private static void Seed(ToggleContext context)
+        private static void SeedToggles(ToggleContext context)
         {
             var isButtonBlue = new Toggle
             {
@@ -64,5 +67,49 @@ namespace ToggleAPI.DAL
 
             context.SaveChanges();
         }
+
+        private static async Task SeedUsers(ToggleContext context, UserManager<SystemUser> userMgr, RoleManager<IdentityRole> roleMgr)
+        {
+            var adminUser = await userMgr.FindByNameAsync("myAdmin");
+            if (adminUser == null)
+            {
+                var newSystemUser = await CreateNewUser(userMgr, "myAdmin", "admin@admin.com", "Administrator!01");
+                await AddClaimToUser(userMgr, newSystemUser, "SuperUser", "True");
+            }
+
+            var user = await userMgr.FindByNameAsync("pedro");
+            if (user == null)
+            {
+                await CreateNewUser(userMgr, "pedro", "pedro@pedro.com", "Password!01");
+            }
+        }
+
+        private static async Task<SystemUser> CreateNewUser(UserManager<SystemUser> userMgr, string userName, string email, string password)
+        {
+            var user = new SystemUser()
+            {
+                UserName = userName,
+                Email = email
+            };
+
+            var userResult = await userMgr.CreateAsync(user, password);
+
+            if (!userResult.Succeeded)
+            {
+                throw new InvalidOperationException("Failed to build user");
+            }
+            return user;
+        }
+
+        private static async Task AddClaimToUser(UserManager<SystemUser> userMgr, SystemUser user, string claimKey, string claimValue)
+        {
+            var claimResult = await userMgr.AddClaimAsync(user, new Claim(claimKey, claimValue));
+            if (!claimResult.Succeeded)
+            {
+                throw new InvalidOperationException("Failed to add claim to user");
+            }
+        }
+
+        
     }
 }

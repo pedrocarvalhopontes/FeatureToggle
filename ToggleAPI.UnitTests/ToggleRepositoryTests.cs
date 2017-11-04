@@ -21,7 +21,7 @@ namespace ToggleAPI.UnitTests
                 .Options;
 
             _context = new ToggleContext(options);
-            _context.EnsureSeedDataForContext();
+            //_context.EnsureSeedDataForContext();
         }
 
         [TestMethod]

@@ -26,7 +26,7 @@ namespace ToggleAPI.UnitTests
                 .Options;
 
             var context = new ToggleContext(options);
-            context.EnsureSeedDataForContext();
+            //context.EnsureSeedDataForContext();
 
             _repository = new ToggleRepository(context);
 

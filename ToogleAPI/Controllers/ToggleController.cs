@@ -21,6 +21,7 @@ namespace ToggleAPI.Controllers
 
         // GET api/toggles
         [HttpGet]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult Get(string systemName)
         {
             var toggles = systemName == null ? _repository.GetAll().ToList() : _repository.GetTogglesForSystem(systemName);
@@ -32,6 +33,7 @@ namespace ToggleAPI.Controllers
 
         // GET api/toggles/5
         [HttpGet("{id}", Name ="GetById")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult Get(Guid id)
         {
             var item = _repository.Get(id);
@@ -47,6 +49,7 @@ namespace ToggleAPI.Controllers
 
         // POST api/toggles
         [HttpPost]
+        [Authorize(AuthenticationSchemes = "Bearer", Policy = "Administrators")]
         public IActionResult Post([FromBody]ToggleDtoInput toggleDtoInput)
         {
             if(toggleDtoInput == null)
@@ -56,7 +59,8 @@ namespace ToggleAPI.Controllers
 
             var toggle = AutoMapper.Mapper.Map<Toggle>(toggleDtoInput);
             _repository.Add(toggle);
-            _repository.Save();//Todo:review if we should return any error?
+            _repository.Save();
+
             var toggleDtoOutput = AutoMapper.Mapper.Map<ToggleDtoOutput>(toggle);
 
             return CreatedAtRoute("GetById", new { id = toggleDtoOutput.Id }, toggleDtoOutput);
