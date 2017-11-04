@@ -22,13 +22,15 @@ namespace ToggleAPI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public IConfiguration Configuration { get; }
+        public ILoggerFactory LoggerFactory { get; }
+
+        public Startup(IConfiguration configuration, ILoggerFactory loggerFactory)
         {
             Configuration = configuration;
+            LoggerFactory = loggerFactory;
         }
-
-        public IConfiguration Configuration { get; }
-
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -43,10 +45,10 @@ namespace ToggleAPI
         }
         
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, ToggleContext context, UserManager<SystemUser> userMgr, RoleManager<IdentityRole> roleMgr)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ToggleContext context, UserManager<SystemUser> userMgr, RoleManager<IdentityRole> roleMgr)
         {
-            loggerFactory.AddDebug();
-            SetupExceptionHandler(app, env, loggerFactory);
+            LoggerFactory.AddDebug();
+            SetupExceptionHandler(app, env);
             app.UseMvc();
             app.UseAuthentication();
             SetupAutomapper();
@@ -65,28 +67,23 @@ namespace ToggleAPI
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"])),
                 ValidateLifetime = true
             };
-
+            var logger = LoggerFactory.CreateLogger("Jwt events logger");
             var tokenEvents = new JwtBearerEvents
             {
                 OnAuthenticationFailed = context =>
                 {
-                    Debug.WriteLine("");
-                    Debug.WriteLine("OnAuthenticationFailed: " +
+                    logger.LogInformation("OnAuthenticationFailed: " +
                                       context.Exception.Message);
-                    Debug.WriteLine("");
                     return Task.CompletedTask;
                 },
                 OnTokenValidated = context =>
                 {
-                    Debug.WriteLine("");
-                    Debug.WriteLine("OnTokenValidated: " +
+                    logger.LogInformation("OnTokenValidated: " +
                                       context.SecurityToken);
-                    Debug.WriteLine("");
                     return Task.CompletedTask;
                 }
                 
             };
-
 
             services.AddIdentity<SystemUser, IdentityRole>()
                 .AddEntityFrameworkStores<ToggleContext>();
@@ -107,7 +104,7 @@ namespace ToggleAPI
              });
         }
 
-        private static void SetupExceptionHandler(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        private void SetupExceptionHandler(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -121,7 +118,7 @@ namespace ToggleAPI
                         var exception = ctx.Features.Get<IExceptionHandlerFeature>();
                         if (exception != null)
                         {
-                            var logger = loggerFactory.CreateLogger("Global Exception");
+                            var logger = LoggerFactory.CreateLogger("Global Exception logger");
                             logger.LogError(500,  exception.Error, exception.Error.Message);
                         }
 
@@ -134,7 +131,10 @@ namespace ToggleAPI
         private static void SetupSwaggerDocumentation(IApplicationBuilder app)
         {
             app.UseSwagger();
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Toggle API V1"); });
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Toggle API V1");
+            });
         }
 
         private static void SetupAutomapper()
