@@ -10,6 +10,7 @@ using ToggleAPI.Models.DTO;
 namespace ToggleAPI.Controllers
 {
     [Route("api/toggles")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class ToggleController : Controller
     {
         private readonly IToggleRepository _repository;
@@ -21,7 +22,6 @@ namespace ToggleAPI.Controllers
 
         // GET api/toggles
         [HttpGet]
-        [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult Get(string systemName)
         {
             var toggles = systemName == null ? _repository.GetAll().ToList() : _repository.GetTogglesForSystem(systemName);
@@ -33,7 +33,6 @@ namespace ToggleAPI.Controllers
 
         // GET api/toggles/5
         [HttpGet("{id}", Name ="GetById")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult Get(Guid id)
         {
             var item = _repository.Get(id);
@@ -49,7 +48,7 @@ namespace ToggleAPI.Controllers
 
         // POST api/toggles
         [HttpPost]
-        [Authorize(AuthenticationSchemes = "Bearer", Policy = "Administrators")]
+        [Authorize(Policy = "Administrators")]
         public IActionResult Post([FromBody]ToggleDtoInput toggleDtoInput)
         {
             if(toggleDtoInput == null)
@@ -92,6 +91,7 @@ namespace ToggleAPI.Controllers
 
         // DELETE api/toggles/5
         [HttpDelete("{id}")]
+        [Authorize(Policy = "Administrators")]
         public IActionResult Delete(Guid id)
         {
             if (!_repository.Contains(id))

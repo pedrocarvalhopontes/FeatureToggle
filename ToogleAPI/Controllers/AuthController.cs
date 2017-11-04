@@ -13,6 +13,10 @@ using ToggleAPI.Models;
 
 namespace ToggleAPI.Controllers
 {
+    /// <inheritdoc />
+    /// <summary>
+    /// Provides an API to create auth tokens
+    /// </summary>
     public class AuthController : Controller
     {
         private readonly UserManager<SystemUser> _userMgr;
@@ -25,15 +29,20 @@ namespace ToggleAPI.Controllers
             _config = config;
         }
 
+        /// <summary>
+        /// Creates a JWT token for for the user in <paramref name="credentials"/>
+        /// </summary>
+        /// <param name="credentials">The user authentication credentials</param>
+        /// <returns>Ok response with token</returns>
         [HttpPost("api/auth/token")]
         public async Task<IActionResult> CreateToken([FromBody] CredentialModel credentials)
         {
             var user = await _userMgr.FindByNameAsync(credentials.UserName);
 
-            if (user == null) return BadRequest();
-            if (!AreValidCredentials(user, credentials)) return BadRequest();
+            if (user == null) return BadRequest("Invalid User");
+            if (!AreValidCredentials(user, credentials)) return BadRequest("Invalid User");
 
-            var token = await GetJwtSecurityToken(user);
+            var token = await CreateJwtSecurityTokenForUser(user);
 
             return Ok(new
             {
@@ -42,7 +51,7 @@ namespace ToggleAPI.Controllers
             });
         }
 
-        private async Task<JwtSecurityToken> GetJwtSecurityToken(SystemUser user)
+        private async Task<JwtSecurityToken> CreateJwtSecurityTokenForUser(SystemUser user)
         {
             var claims = await GetClaimsAsync(user);
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
