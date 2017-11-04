@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Text;
+﻿using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -54,7 +53,7 @@ namespace ToggleAPI
             SetupAutomapper();
             SetupSwaggerDocumentation(app);
 
-            context.EnsureSeedDataForContext(userMgr, roleMgr);
+            context.EnsureSeedDataWithUsers(userMgr, roleMgr);
         }
 
         private void AddAutheticationAndAuthorization(IServiceCollection services)

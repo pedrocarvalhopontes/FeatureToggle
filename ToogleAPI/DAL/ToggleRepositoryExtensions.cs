@@ -15,7 +15,7 @@ namespace ToggleAPI.DAL
         /// <summary>
         /// Ensures that a database is created and if it is empty and, if so, it feeds some data into it.
         /// </summary>
-        public static void EnsureSeedDataForContext(this ToggleContext context, UserManager<SystemUser> userMgr, RoleManager<IdentityRole> roleMgr)
+        public static void EnsureSeedDataForContext(this ToggleContext context)
         {
             context.Database.EnsureCreated();
             if (context.ToggleItems.Any())
@@ -23,6 +23,11 @@ namespace ToggleAPI.DAL
                 return;
             }
             SeedToggles(context);
+        }
+
+        public static void EnsureSeedDataWithUsers(this ToggleContext context, UserManager<SystemUser> userMgr, RoleManager<IdentityRole> roleMgr)
+        {
+            EnsureSeedDataForContext(context);
             SeedUsers(context, userMgr, roleMgr).Wait();
         }
 
