@@ -27,7 +27,7 @@ namespace ToggleAPI.DAL
             return _context.ToggleItems.Include(t => t.Configurations).FirstOrDefault(t => t.Id == key);
         }
 
-        public IQueryable<Toggle> GetAll()
+        public IEnumerable<Toggle> GetAll()
         {
             return _context.ToggleItems.Include(t => t.Configurations);
         }

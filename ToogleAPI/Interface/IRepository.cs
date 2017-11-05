@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ToggleAPI.Interface
@@ -10,7 +11,7 @@ namespace ToggleAPI.Interface
     public interface IRepository<TEntity> where TEntity:class
     {
         TEntity Get(Guid key);
-        IQueryable<TEntity> GetAll();
+        IEnumerable<TEntity> GetAll();
         TEntity Add(TEntity item);
         TEntity Update(TEntity item);
         void Remove(Guid key);
