@@ -71,7 +71,7 @@ namespace ToggleAPI.UnitTests
             Assert.IsNotNull(result);
             Assert.AreEqual(toggles.Count, result.Count);
         }
-        
+
         [TestMethod]
         public void Update_Successful()
         {
@@ -154,7 +154,5 @@ namespace ToggleAPI.UnitTests
                 Assert.IsTrue(systemName.Equals(actualName) || "*".Equals(actualName));
             }
         }
-
-        
     }
 }

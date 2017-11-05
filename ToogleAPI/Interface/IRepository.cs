@@ -7,7 +7,7 @@ namespace ToggleAPI.Interface
     /// Definition of the contract to the implementation of the repository pattern.
     /// </summary>
     /// <typeparam name="TEntity">Type of entities supported by the repository</typeparam>
-    public interface IRepository<TEntity> where TEntity:class
+    public interface IRepository<TEntity> where TEntity : class
     {
         TEntity Get(Guid key);
         IEnumerable<TEntity> GetAll();

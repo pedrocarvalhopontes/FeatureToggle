@@ -123,11 +123,11 @@ namespace ToggleAPI.Controllers
         }
 
         /// <summary>
-        /// Performs a full update for an existing configuration that matches the <paramref name="id"/> from configurations available for a toggle that maches the <paramref name="toggleId"/>.
+        /// Performs a full update for an existing configuration that matches the <paramref name="id"/> from configurations available, for a toggle that maches the <paramref name="toggleId"/>.
         /// </summary>
         /// <param name="toggleId">Unique identifier of a toggle.</param>
         /// <param name="id">Unique identifier of a configuration.</param>
-        /// <param name="newConfiguration"></param>
+        /// <param name="newConfiguration">New Configuration Values</param>
         /// <returns>NoContent if successful, NotFound if the toggle doesn't exist.</returns>
         [HttpPut("{id}")]
         public IActionResult UpdateConfigurationForToggle(Guid toggleId, Guid id, [FromBody]ConfigurationDtoInput newConfiguration)
@@ -154,6 +154,5 @@ namespace ToggleAPI.Controllers
 
             return NoContent();
         }
-
     }
 }

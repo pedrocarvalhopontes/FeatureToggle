@@ -15,6 +15,7 @@ namespace ToggleAPI.DAL
         /// <summary>
         /// Ensures that a database is created and if it is empty and, if so, it feeds some data into it.
         /// </summary>
+        /// <param name="context">Database context</param>
         public static void EnsureSeedDataForContext(this ToggleContext context)
         {
             context.Database.EnsureCreated();
@@ -63,7 +64,7 @@ namespace ToggleAPI.DAL
                 Configurations =
                 {
                     new Configuration {SystemName = "*", Value = true},
-                    new Configuration {SystemName = "Abc", Value=false}
+                    new Configuration {SystemName = "Abc", Value = false}
                 }
             };
             context.ToggleItems.Add(isButtonBlue);
@@ -114,7 +115,5 @@ namespace ToggleAPI.DAL
                 throw new InvalidOperationException("Failed to add claim to user");
             }
         }
-
-        
     }
 }
