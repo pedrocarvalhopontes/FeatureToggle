@@ -12,10 +12,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
-using ToggleAPI.DAL;
-using ToggleAPI.Interface;
 using ToggleAPI.Mapping;
 using ToggleAPI.Models;
+using ToggleAPI.Repository;
 
 namespace ToggleAPI
 {

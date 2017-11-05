@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using ToggleAPI.Models;
 
-namespace ToggleAPI.DAL
+namespace ToggleAPI.Repository
 {
     /// <summary>
     /// Extends the ToogleRepository class with a seeding mechanism.

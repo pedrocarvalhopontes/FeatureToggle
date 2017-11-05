@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ToggleAPI.Interface
+namespace ToggleAPI.Repository
 {
     /// <summary>
     /// Definition of the contract to the implementation of the repository pattern.

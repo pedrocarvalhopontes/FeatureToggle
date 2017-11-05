@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ToggleAPI.Controllers;
-using ToggleAPI.Interface;
 using ToggleAPI.Mapping;
 using ToggleAPI.Models;
 using ToggleAPI.Models.DTO;

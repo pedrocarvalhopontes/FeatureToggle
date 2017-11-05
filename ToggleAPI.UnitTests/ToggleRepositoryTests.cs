@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ToggleAPI.DAL;
 using ToggleAPI.Models;
+using ToggleAPI.Repository;
 
 namespace ToggleAPI.UnitTests
 {

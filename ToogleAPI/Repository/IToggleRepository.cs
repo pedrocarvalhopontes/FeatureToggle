@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ToggleAPI.Models;
 
-namespace ToggleAPI.Interface
+namespace ToggleAPI.Repository
 {
     /// <summary>
     /// Specialization of the IRepository interface for a toggle.

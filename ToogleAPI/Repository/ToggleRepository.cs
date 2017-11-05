@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using ToggleAPI.Interface;
 using ToggleAPI.Models;
 
-namespace ToggleAPI.DAL
+namespace ToggleAPI.Repository
 {
     public class ToggleRepository : IToggleRepository
     {

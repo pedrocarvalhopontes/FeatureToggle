@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ToggleAPI.Interface;
 using ToggleAPI.Models;
 using ToggleAPI.Models.DTO;
 
