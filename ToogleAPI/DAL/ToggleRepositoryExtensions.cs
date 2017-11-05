@@ -28,7 +28,7 @@ namespace ToggleAPI.DAL
         public static void EnsureSeedDataWithUsers(this ToggleContext context, UserManager<SystemUser> userMgr, RoleManager<IdentityRole> roleMgr)
         {
             EnsureSeedDataForContext(context);
-            SeedUsers(context, userMgr, roleMgr).Wait();
+            SeedUsers(userMgr).Wait();
         }
 
         private static void SeedToggles(ToggleContext context)
@@ -73,7 +73,7 @@ namespace ToggleAPI.DAL
             context.SaveChanges();
         }
 
-        private static async Task SeedUsers(ToggleContext context, UserManager<SystemUser> userMgr, RoleManager<IdentityRole> roleMgr)
+        private static async Task SeedUsers(UserManager<SystemUser> userMgr)
         {
             var adminUser = await userMgr.FindByNameAsync("myAdmin");
             if (adminUser == null)

@@ -92,9 +92,7 @@ namespace ToggleAPI.Controllers
 
             var configurationOutput = AutoMapper.Mapper.Map<ConfigurationDtoOutput>(configurationEntity);
 
-            return CreatedAtRoute("GetConfigurationForToggle",
-                new { toggleId = toggleId, id = configurationOutput.Id },
-                configurationOutput);
+            return CreatedAtRoute("GetConfigurationForToggle", new { toggleId = toggleId, id = configurationOutput.Id }, configurationOutput);
         }
 
         /// <summary>
