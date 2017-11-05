@@ -8,6 +8,7 @@ using ToggleAPI.Controllers;
 using ToggleAPI.Mapping;
 using ToggleAPI.Models;
 using ToggleAPI.Models.DTO;
+using ToggleAPI.Repository;
 
 namespace ToggleAPI.UnitTests
 {
